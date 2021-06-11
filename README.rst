@@ -134,7 +134,7 @@ Bob must gather at least ``threshold`` cfrags in order to activate the capsule.
     # Several Ursulas perform re-encryption, and Bob collects the resulting `cfrags`.
     cfrags = list()           # Bob's cfrag collection
     for kfrag in kfrags[:10]:
-        cfrag = pre.reencrypt(capsule=capsule, kfrag=kfrag)
+        cfrag = reencrypt(capsule=capsule, kfrag=kfrag)
         cfrags.append(cfrag)    # Bob collects a cfrag
 
 
@@ -147,11 +147,11 @@ and then decrypts the re-encrypted ciphertext.
 
     from umbral import decrypt_reencrypted
 
-    bob_cleartext = pre.decrypt_reencrypted(decrypting_sk=bobs_secret_key,
-                                            delegating_pk=alices_public_key,
-                                            capsule=capsule,
-                                            cfrags=cfrags,
-                                            ciphertext=ciphertext)
+    bob_cleartext = decrypt_reencrypted(decrypting_sk=bobs_secret_key,
+                                        delegating_pk=alices_public_key,
+                                        capsule=capsule,
+                                        verified_cfrags=cfrags,
+                                        ciphertext=ciphertext)
     assert bob_cleartext == plaintext
 
 See more detailed usage examples in the docs_ directory.
